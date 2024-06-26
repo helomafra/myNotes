@@ -1,16 +1,16 @@
 
 # myNotes
-Aplicação para salvar e gerenciar seus links úteis. Crie uma nota, adicione tags e links a ela. Depois, filtre suas notas de interesse por assunto. 
+Application to save and manage your useful links. Create a note, add tags and links to it. Then, filter your notes of interest by topic.
 
 
-## 🚀 Tecnologias: 
+## 🚀 Technologies: 
 - ReactJS
 - JavaScript
 - Styled-Components
 - Vite
 - Axios
 
-## Acesse
+## Access Here
 
 https://mynotes-keep.netlify.app/
  

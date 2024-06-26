@@ -1,44 +1,44 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
 
-import { Container, Links, Content } from "./styles";
-import { Header } from "../../components/Header";
-import { Button } from "../../components/Button";
-import { Section } from "../../components/Section";
-import { Tag } from "../../components/Tag";
-import { ButtonText } from "../../components/ButtonText";
-import { api } from "../../services/api";
+import { Container, Links, Content } from "./styles"
+import { Header } from "../../components/Header"
+import { Button } from "../../components/Button"
+import { Section } from "../../components/Section"
+import { Tag } from "../../components/Tag"
+import { ButtonText } from "../../components/ButtonText"
+import { api } from "../../services/api"
 
-import { FiArrowLeft, FiTrash2 } from "react-icons/fi";
+import { FiArrowLeft, FiTrash2 } from "react-icons/fi"
 
 export function Details() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(null)
 
-  const params = useParams();
-  const navigate = useNavigate();
+  const params = useParams()
+  const navigate = useNavigate()
 
   async function handleRemoveNote() {
-    const confirm = window.confirm("Deseja realmente excluir nota?");
+    const confirm = window.confirm("Do you really want to delete the note?")
 
     if (confirm) {
-      await api.delete(`/notes/${params.id}`);
-      navigate(-1);
+      await api.delete(`/notes/${params.id}`)
+      navigate(-1)
     }
   }
 
   function handleBackPage() {
-    navigate(-1);
+    navigate(-1)
   }
 
   useEffect(() => {
     async function fetchNote() {
-      const response = await api.get(`/notes/${params.id}`);
+      const response = await api.get(`/notes/${params.id}`)
 
-      setData(response.data);
+      setData(response.data)
     }
 
-    fetchNote();
-  }, []);
+    fetchNote()
+  }, [])
 
   return (
     <Container>
@@ -48,7 +48,7 @@ export function Details() {
           <Content>
             <header>
               <ButtonText
-                title="Voltar"
+                title="Back"
                 onClick={handleBackPage}
                 icon={FiArrowLeft}
               />
@@ -59,7 +59,7 @@ export function Details() {
               <p>{data.description}</p>
 
               {data.links && (
-                <Section title="Links úteis">
+                <Section title="Useful links">
                   <Links>
                     {data.links.map((link) => (
                       <li key={String(link.id)}>
@@ -73,7 +73,7 @@ export function Details() {
               )}
 
               {data.tags && (
-                <Section title="Marcadores">
+                <Section title="Tags">
                   {data.tags.map((tag) => (
                     <Tag key={String(tag.id)} title={tag.name} />
                   ))}
@@ -82,7 +82,7 @@ export function Details() {
             </div>
 
             <ButtonText
-              title="Excluir nota"
+              title="Delete note"
               onClick={handleRemoveNote}
               icon={FiTrash2}
             />
@@ -90,5 +90,5 @@ export function Details() {
         </main>
       )}
     </Container>
-  );
+  )
 }

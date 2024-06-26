@@ -1,79 +1,79 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { Container, Form } from "./styles";
-import { Header } from "../../components/Header";
-import { Input } from "../../components/Input";
-import { Textarea } from "../../components/TextArea";
-import { NoteItem } from "../../components/NoteItem";
-import { Section } from "../../components/Section";
-import { Button } from "../../components/Button";
-import { ButtonText } from "../../components/ButtonText/index";
-import { FiArrowLeft } from "react-icons/fi";
+import { Container, Form } from "./styles"
+import { Header } from "../../components/Header"
+import { Input } from "../../components/Input"
+import { Textarea } from "../../components/TextArea"
+import { NoteItem } from "../../components/NoteItem"
+import { Section } from "../../components/Section"
+import { Button } from "../../components/Button"
+import { ButtonText } from "../../components/ButtonText/index"
+import { FiArrowLeft } from "react-icons/fi"
 
-import { api } from "../../services/api";
+import { api } from "../../services/api"
 
 export function New() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
 
-  const [links, setLinks] = useState([]); //guarda todos os links
-  const [newLink, setNewLink] = useState("");
+  const [links, setLinks] = useState([]) //guarda todos os links
+  const [newLink, setNewLink] = useState("")
 
-  const [tags, setTags] = useState([]); //guarda todos os links
-  const [newTag, setNewTag] = useState(""); //armazena o link a ser adicionado
+  const [tags, setTags] = useState([]) //guarda todos os links
+  const [newTag, setNewTag] = useState("") //armazena o link a ser adicionado
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   function handleBackPage() {
-    navigate(-1);
+    navigate(-1)
   }
 
   function handleKeyPressLink(event) {
     if (event.key === "Enter") {
-      handleAddLink();
+      handleAddLink()
     }
   }
 
   function handleAddLink() {
-    setLinks((prevState) => [...prevState, newLink]);
-    setNewLink("");
+    setLinks((prevState) => [...prevState, newLink])
+    setNewLink("")
   }
 
   function handleRemoveLink(deleted) {
-    setLinks((prevState) => prevState.filter((link) => link !== deleted));
+    setLinks((prevState) => prevState.filter((link) => link !== deleted))
   }
 
   function handleKeyPressTag(event) {
     if (event.key === "Enter") {
-      handleAddTag();
+      handleAddTag()
     }
   }
 
   function handleAddTag() {
-    setTags((prevState) => [...prevState, newTag]);
-    setNewTag(""); //serve para limpar o input
+    setTags((prevState) => [...prevState, newTag])
+    setNewTag("") //serve para limpar o input
   }
 
   function handleRemoveTag(deleted) {
-    setTags((prevState) => prevState.filter((tag) => tag !== deleted));
+    setTags((prevState) => prevState.filter((tag) => tag !== deleted))
   }
 
   async function handleNewNote() {
     if (!title) {
-      return alert("Digite o título da nota!");
+      return alert("Enter the note title!")
     }
 
     if (newLink) {
       return alert(
-        "Você deixou um link preenchido sem adicionar. Clique para adicionar ou deixe o campo vazio."
-      );
+        "You left a link field filled without adding. Click to add or leave the field empty."
+      )
     }
 
     if (newTag) {
       return alert(
-        "Você deixou uma tag preenchida sem adicionar. Clique para adicionar ou deixe o campo vazio."
-      );
+        "You left a tag field filled without adding. Click to add or leave the field empty."
+      )
     }
 
     await api.post("/notes", {
@@ -81,10 +81,10 @@ export function New() {
       description,
       tags,
       links,
-    });
+    })
 
-    alert("Nota criada com sucesso!");
-    navigate(-1);
+    alert("Note created successfully!")
+    navigate(-1)
   }
 
   return (
@@ -95,23 +95,23 @@ export function New() {
         <Form>
           <header>
             <ButtonText
-              title="Voltar"
+              title="Back"
               onClick={handleBackPage}
               icon={FiArrowLeft}
             />
-            <h1>Criar nota</h1>
+            <h1>New note</h1>
           </header>
 
           <Input
-            placeholder="Título"
+            placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
           />
           <Textarea
-            placeholder="Observações"
+            placeholder="Description"
             onChange={(e) => setDescription(e.target.value)}
           />
 
-          <Section title="Links úteis">
+          <Section title="Useful links">
             {links.map((link, index) => (
               <NoteItem
                 key={String(index)}
@@ -121,7 +121,7 @@ export function New() {
             ))}
             <NoteItem
               isNew
-              placeholder="Novo link"
+              placeholder="New link"
               value={newLink}
               onChange={(e) => setNewLink(e.target.value)}
               onClick={handleAddLink}
@@ -129,7 +129,7 @@ export function New() {
             />
           </Section>
 
-          <Section title="Marcadores">
+          <Section title="Tags">
             <div className="tags">
               {tags.map((tag, index) => (
                 <NoteItem
@@ -141,7 +141,7 @@ export function New() {
 
               <NoteItem
                 isNew
-                placeholder="Nova tag"
+                placeholder="New tag"
                 onChange={(e) => setNewTag(e.target.value)}
                 value={newTag}
                 onClick={handleAddTag}
@@ -150,9 +150,9 @@ export function New() {
             </div>
           </Section>
 
-          <Button title="Salvar" onClick={handleNewNote}></Button>
+          <Button title="Save" onClick={handleNewNote}></Button>
         </Form>
       </main>
     </Container>
-  );
+  )
 }
